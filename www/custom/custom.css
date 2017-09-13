@@ -379,6 +379,33 @@ a {
 	width: 100%;
 }
 
+#groupWrapper{
+	background-color: white;
+}
+
+.groupInfoWrapper{
+ padding-top: 2%;
+}
+
+#groupName{
+	font-family: GOT;
+	font-size: 20px;
+	text-align: center;
+
+
+}
+.groupName{
+	text-align: center;
+}
+
+.groupNumMembers{
+	text-align: center;
+}
+
+.groupDescription{
+	padding-top: 1%;
+	text-align: center;
+}
 
 /*  Edit User Page         -------------------------*/
 

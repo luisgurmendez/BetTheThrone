@@ -31,7 +31,7 @@ function deviceReady() {
 
         }, 2000);
 
-
+		
 		// Uniformisa el height de los containers de las imagenes de las houses y de los characters
 		setTimeout(function () {
             $('.charWrapper').height($($('.charWrapper')[0]).height())

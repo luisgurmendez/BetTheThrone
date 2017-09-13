@@ -1,0 +1,35 @@
+{
+    "name": "org.luis.betthethrone",
+    "version": "0.0.1",
+    "displayName": "GOT",
+    "cordova": {
+        "platforms": [
+            "android",
+            "ios"
+        ],
+        "plugins": {
+            "cordova-plugin-device": {},
+            "cordova-plugin-dialogs": {},
+            "cordova-plugin-inappbrowser": {},
+            "cordova-plugin-network-information": {},
+            "cordova-plugin-splashscreen": {},
+            "cordova-plugin-vibration": {},
+            "cordova-plugin-whitelist": {},
+            "cordova-plugin-x-toast": {},
+            "ionic-plugin-keyboard": {}
+        }
+    },
+    "dependencies": {
+        "cordova-android": "~6.2.3",
+        "cordova-ios": "^4.5.0",
+        "cordova-plugin-device": "~1.1.6",
+        "cordova-plugin-dialogs": "~1.3.3",
+        "cordova-plugin-inappbrowser": "~1.7.1",
+        "cordova-plugin-network-information": "~1.3.3",
+        "cordova-plugin-splashscreen": "~4.0.3",
+        "cordova-plugin-vibration": "~2.1.5",
+        "cordova-plugin-whitelist": "1",
+        "cordova-plugin-x-toast": "~2.6.0",
+        "ionic-plugin-keyboard": "~2.2.1"
+    }
+}

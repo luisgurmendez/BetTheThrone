@@ -8,31 +8,31 @@
     },
     "installed_plugins": {
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "org.tedym.additionalInfo"
+            "PACKAGE_NAME": "org.luis.betthethrone"
         },
         "cordova-plugin-dialogs": {
-            "PACKAGE_NAME": "org.tedym.additionalInfo"
+            "PACKAGE_NAME": "org.luis.betthethrone"
         },
         "cordova-plugin-inappbrowser": {
-            "PACKAGE_NAME": "org.tedym.additionalInfo"
+            "PACKAGE_NAME": "org.luis.betthethrone"
         },
         "cordova-plugin-network-information": {
-            "PACKAGE_NAME": "org.tedym.additionalInfo"
+            "PACKAGE_NAME": "org.luis.betthethrone"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "org.tedym.additionalInfo"
+            "PACKAGE_NAME": "org.luis.betthethrone"
         },
         "cordova-plugin-vibration": {
-            "PACKAGE_NAME": "org.tedym.additionalInfo"
+            "PACKAGE_NAME": "org.luis.betthethrone"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "org.tedym.additionalInfo"
+            "PACKAGE_NAME": "org.luis.betthethrone"
         },
         "cordova-plugin-x-toast": {
-            "PACKAGE_NAME": "org.tedym.additionalInfo"
+            "PACKAGE_NAME": "org.luis.betthethrone"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "org.tedym.additionalInfo"
+            "PACKAGE_NAME": "org.luis.betthethrone"
         }
     },
     "dependent_plugins": {}

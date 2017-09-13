@@ -42,10 +42,10 @@ function deviceReady() {
         $('.groupCJButton').width(Math.max.apply(Math, $('.groupCJButton').map(function(){ return $(this).width(); }).get()))
 
 
-		if(user.username == null){
+		/*if(user.username == null){
             toggleFooter();
             mui.viewport.showPage('signUpPage','FLOAT_UP')
-		}
+		}*/
 
 	} catch (e) {
 		//your decision
