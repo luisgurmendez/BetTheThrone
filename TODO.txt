@@ -1,0 +1,6 @@
+TODO: Cosas para mejorar.
+
+- Transiciones de pagina en Android, efecto raro se pone en blanco. Ideas: Quizas cambiar el efecto a NONE cuando plataforma es android.
+- font-size en general, https://stackoverflow.com/questions/16056591/font-scaling-based-on-width-of-container
+- load de las imagenes, en el header se setea el width con un timer, cambiar a cunado se loadea la imagen, porque sino la imagen queda abajo.
+-

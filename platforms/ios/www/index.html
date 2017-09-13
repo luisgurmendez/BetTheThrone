@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MobileUI Template</title>
+    <meta name="viewport" content="minimal-ui, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="format-detection" content="telephone=no" />
+
+	<link rel="stylesheet" href="mobileui/mui.min.css" type="text/css">
+    <link rel="stylesheet" href="custom/custom.css" type="text/css">
+	<!--[if lt IE 9]><script  type="text/javascript" src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+
+    <script src="phonegap.js"></script>		
+ 	<script src="vendors/fastclick.min.js" type="text/javascript"></script>    	 	
+	<!-- <script type="text/javascript" src="PushNotification.js"></script>  -->
+    	
+    <script src="vendors/jquery.min.js" type="text/javascript"></script>
+    <script src="vendors/jquery.animate-enhanced.js" type="text/javascript"></script>
+	<script src="vendors/jqwait/jquery.wait.min.js" type="text/javascript"></script>   
+    <script src="vendors/iscroll-min.js" type="text/javascript"></script>
+    
+	<script src="mobileui/mui.min.js" type="text/javascript"></script>
+    <script src="custom/custom.js" type="text/javascript"></script>
+</head>
+<body>
+	<!-- Main wrapper. Importantly, think carefully before you change it or remove it. Do not recommend it. -->
+	<!-- Main wrapper. Importante, Piénselo bien antes de cambiarlo o quitarlo. No se lo recomiendo. -->
+    <div id="mui-screen" class="mui-viewport">
+		<div id="mui-screen-page" class="mui-page">
+			<!-- Ddefault viewport. Do not remove. It will make your life simpler and happy. -->
+			<!-- ViewPort por defecto. No lo elimines. Hará tu vida más simple y feliz. -->
+			<div id="mui-viewport" class="mui-viewport">
+
+				<div id='home-page' class="mui-page">
+					<div class="mui-page-header">
+						<div class="usernameHouseWrapperHeader">
+							<div class="usernameHeader">
+								<span>Players Name <br> of house <br> Selected House</span>
+							</div>
+							<div class="houseIconHeader">
+								<img src="custom/images/houses/stark.png">
+							</div>
+						</div>
+					</div>
+					<div class="mui-page-body " id="home-body">
+						<div class="homeCapInfoWrapper">
+							<span>Season 8</span>
+							<div class="homeCapName">"Episodes Name"</div>
+							<div class="homeTimeCountWrapper">
+								<div class="homeTimeCountBox">
+									<div>Days</div>
+									<div>349</div>
+								</div>
+
+								<div class="homeTimeCountBox">
+									<div>Hours</div>
+									<div>7</div>
+								</div>
+								<div class="homeTimeCountBox">
+									<div>Minutes</div>
+									<div>2</div>
+								</div>
+							</div>
+						</div>
+						<div class="backgroundImageWrapper">
+							<img src="custom/images/backgrounds/homeBackground.png">
+						</div>
+
+						<div id="homeMiddleTitleWrapper">The End is Close</div>
+					</div>
+				</div>
+
+				<div id='signUpPage' class="mui-page">
+					<div class="mui-page-body " id="edit-user-body">
+						<div class="iconHeader">
+							<img src="custom/images/headerBackground.png">
+						</div>
+
+						<div class="signUpWrapper">
+
+							<div class="facebookBtn">
+								Login with Facebook
+							</div>
+
+							<div class="greyLettersLabel" style="margin-top:20px;">or</div>
+
+							<input placeholder="Username" id="usernameInput" maxlength="20">
+
+						</div>
+
+
+						<div id="saveUsernameBtn" hidden>Save</div>
+
+
+					</div>
+				</div>
+
+
+
+				<div id="selectHousePage" class="mui-page">
+					<div id="selectHouseBody" class="mui-page-body mui-scrollable">
+						<div>
+							<div id="selectHouseSubTitle">Select your house</div>
+							<div id="houseSelectionWrapper">
+								<div class="houseWrapper" data-house="arryn">
+									<div class='houseIcon'>
+										<img src='custom/images/houses/arryn.png'>
+									</div>
+									<div class='houseName'>Arryn</div>
+								</div>
+								<div class="houseWrapper" data-house="baratheon">
+									<div class='houseIcon'>
+										<img src='custom/images/houses/baratheon.png'>
+									</div>
+									<div class='houseName'>Baratheon</div>
+								</div>
+								<div class="houseWrapper" data-house="bolton">
+									<div class='houseIcon'>
+										<img src='custom/images/houses/bolton.png'>
+									</div>
+									<div class='houseName'>Bolton</div>
+								</div>
+								<div class="houseWrapper" data-house="clegane">
+									<div class='houseIcon'>
+										<img src='custom/images/houses/clegane.png'>
+									</div>
+									<div class='houseName'>Clegane</div>
+								</div>
+
+								<div class="houseWrapper" data-house="greyjoy">
+									<div class='houseIcon'>
+										<img src='custom/images/houses/greyjoy.png'>
+									</div>
+									<div class='houseName'>Greyjoy</div>
+								</div>
+								<div class="houseWrapper" data-house="lannister">
+									<div class='houseIcon'>
+										<img src='custom/images/houses/lannister.png'>
+									</div>
+									<div class='houseName'>Lannister</div>
+								</div>
+								<div class="houseWrapper" data-house="martell">
+									<div class='houseIcon'>
+										<img src='custom/images/houses/martell.png'>
+									</div>
+									<div class='houseName'>Martell</div>
+								</div>
+
+								<div class="houseWrapper" data-house="mormont">
+									<div class='houseIcon'>
+										<img src='custom/images/houses/mormont.png'>
+									</div>
+									<div class='houseName'>Mormont</div>
+								</div>
+								<div class="houseWrapper" data-house="stark">
+									<div class='houseIcon'>
+										<img src='custom/images/houses/stark.png'>
+									</div>
+									<div class='houseName'>Stark</div>
+								</div>
+								<div class="houseWrapper" data-house="targaryen">
+									<div class='houseIcon'>
+										<img src='custom/images/houses/targaryen.png'>
+									</div>
+									<div class='houseName'>Targaryen</div>
+								</div>
+								<div class="houseWrapper" data-house="tarly">
+									<div class='houseIcon'>
+										<img src='custom/images/houses/tarly.png'>
+									</div>
+									<div class='houseName'>Tarly</div>
+								</div>
+								<div class="houseWrapper" data-house="tully">
+									<div class='houseIcon'>
+										<img src='custom/images/houses/tully.png'>
+									</div>
+									<div class='houseName'>Tully</div>
+								</div>
+								<div class="houseWrapper" data-house="tyrell">
+									<div class='houseIcon'>
+										<img src='custom/images/houses/tyrell.png'>
+									</div>
+									<div class='houseName'>Tyrell</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+
+
+				<div id='prediction-page' class="mui-page">
+					<div class="mui-page-header">
+						<div class="usernameHouseWrapperHeader">
+							<div class="usernameHeader">
+								<span>Players Name <br> of house <br> Selected House</span>
+							</div>
+							<div class="houseIconHeader">
+								<img src="custom/images/houses/stark.png">
+							</div>
+						</div>
+					</div>
+					<div class="mui-page-body mui-scrollable" id="prediction-body">
+						<div>
+							<div id="predictionSubTitle">Make your Move</div>
+							<div id="predictionCharacterSelectWrapper">
+								<div class="charWrapper">
+									<div class='charIcon'>
+										<img src='custom/images/characters/archimaestreEbrose.png'>
+									</div>
+									<div class='charName'> Archimaestre Ebrose
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/aryaStark.png'>
+									</div>
+									<div class='charName'> Arya Stark
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/benjenStark.png'>
+									</div>
+									<div class='charName'> Benjen Stark
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/bericDondarrion.png'>
+									</div>
+									<div class='charName'> Beric Dondarrion
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/branStark.png'>
+									</div>
+									<div class='charName'> Bran Stark
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/brienneOfTarth.png'>
+									</div>
+									<div class='charName'> Brienne Of Tarth
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/bronn.png'>
+									</div>
+									<div class='charName'> Bronn
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/cerseiLannister.png'>
+									</div>
+									<div class='charName'> Cersei Lannister
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/daarioNaharis.png'>
+									</div>
+									<div class='charName'> Daario Naharis
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/daenerysTargaryen.png'>
+									</div>
+									<div class='charName'> Daenerys Targaryen
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/davosSeaworth.png'>
+									</div>
+									<div class='charName'> Davos Seaworth
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/drogon.png'>
+									</div>
+									<div class='charName'> Drogon
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/eddTollet.png'>
+									</div>
+									<div class='charName'> Edd Tollet
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/ellariaSand.png'>
+									</div>
+									<div class='charName'> Ellaria Sand
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/euronGreyjoy.png'>
+									</div>
+									<div class='charName'> Euron Greyjoy
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/gendryBaratheon.png'>
+									</div>
+									<div class='charName'> Gendry Baratheon
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/gilly.png'>
+									</div>
+									<div class='charName'> Gilly
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/gregorClagene.png'>
+									</div>
+									<div class='charName'> Gregor Clagene
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/greyWorm.png'>
+									</div>
+									<div class='charName'> Grey Worm
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/jagenHgar.png'>
+									</div>
+									<div class='charName'> Jagen Hgar
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/jaimeLannister.png'>
+									</div>
+									<div class='charName'> Jaime Lannister
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/jonSnow.png'>
+									</div>
+									<div class='charName'> Jon Snow
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/jorahMormont.png'>
+									</div>
+									<div class='charName'> Jorah Mormont
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/khalMoro.png'>
+									</div>
+									<div class='charName'> Khal Moro
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/lyannaMormont.png'>
+									</div>
+									<div class='charName'> Lyanna Mormont
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/melisandre.png'>
+									</div>
+									<div class='charName'> Melisandre
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/missandei.png'>
+									</div>
+									<div class='charName'> Missandei
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/nightKing.png'>
+									</div>
+									<div class='charName'> Night King
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/podrickPayne.png'>
+									</div>
+									<div class='charName'> Podrick Payne
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/qyburn.png'>
+									</div>
+									<div class='charName'> Qyburn
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/rhaegal.png'>
+									</div>
+									<div class='charName'> Rhaegal
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/samwellTarly.png'>
+									</div>
+									<div class='charName'> Samwell Tarly
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/sansaStark.png'>
+									</div>
+									<div class='charName'> Sansa Stark
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/theHound.png'>
+									</div>
+									<div class='charName'> The Hound
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/theonGreyjoy.png'>
+									</div>
+									<div class='charName'> Theon Greyjoy
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/tormund.png'>
+									</div>
+									<div class='charName'> Tormund
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/tyrionLannister.png'>
+									</div>
+									<div class='charName'> Tyrion Lannister
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/varys.png'>
+									</div>
+									<div class='charName'> Varys
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/viserion.png'>
+									</div>
+									<div class='charName'> Viserion
+									</div>
+								</div>
+
+								<div class='charWrapper'>
+									<div class='charIcon'>
+										<img src='custom/images/characters/yaraGreyjoy.png'>
+									</div>
+									<div class='charName'> Yara Greyjoy
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id='group-page' class="mui-page">
+					<div class="mui-page-header">
+						<div class="usernameHouseWrapperHeader">
+							<div class="usernameHeader">
+								<span>Players Name <br> of house <br> Selected House</span>
+							</div>
+							<div class="houseIconHeader">
+								<img src="custom/images/houses/stark.png">
+							</div>
+						</div>
+					</div>
+					<div class="mui-page-body " id="group-body">
+						<div class="groupSubHeaderPanel">
+							<div id="groupBackgroundImageWrapper">
+								<img src="custom/images/backgrounds/groupBackground.png">
+							</div>
+							<div class="groupSubHeaderTitle">Play With Your Friends</div>
+							<div id="groupCreateJoinButtonsWrapper">
+								<div class="groupCJButton" id="groupCreateButton">Create Group</div>
+								<div class="groupCJButton" id="groupJoinButton">Join Group</div>
+							</div>
+						</div>
+						<div id="groupWrapper">
+
+							<div class="group">
+								<div class="groupAdminButtonWrapper">
+									<div class="groupInviteButton"></div>
+									<div class="groupConfigButton"></div>
+								</div>
+								<div class="groupInfoWrapper">
+									<div class="groupName">Group Name</div>
+									<div class="groupNumMembers">(0 miembros)</div>
+									<div class="groupDescription"> Group description 100 characters max.</div>
+								</div>
+
+								<div class="groupRankingTableWrapper">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>	
+			<!-- Optional.Toolbar out of mui-viewport to be omnipresent. Remove if not needed. -->
+			<!-- Opcional. Barra de herramientas fuera de mui-viewport para ser omnipresente. Elimínalo si no lo necesitas. -->
+	        <div class="mui-tabbar" id="footer">
+				<div id="tabbSelectedSlider"></div>
+	        	<ul class="mui-tabbar-list">
+	        		<li class="mui-tabbar-button" ><img src="custom/images/tabbIcons/active/home.png"><a data-active="custom/images/tabbIcons/active/home.png" data-inactive="custom/images/tabbIcons/inactive/home.png" data-page="home-page" class="active" id="tabbar-home" href="#">Home</a></li>
+	    			<li class="mui-tabbar-button"  ><img src="custom/images/tabbIcons/inactive/prediction.png"><a data-active="custom/images/tabbIcons/active/prediction.png" data-inactive="custom/images/tabbIcons/inactive/prediction.png" data-page="prediction-page" id="tabbar-predictions" href="#"  >Predictions</a></li>
+	    			<li class="mui-tabbar-button"  ><img src="custom/images/tabbIcons/inactive/group.png"><a data-active="custom/images/tabbIcons/active/group.png" data-inactive="custom/images/tabbIcons/inactive/group.png" data-page="group-page" id="tabbar-groups" href='#'>Groups</a></li>
+	    			<li class="mui-tabbar-button"  ><img src="custom/images/tabbIcons/inactive/more.png"><a data-active="custom/images/tabbIcons/active/more.png" data-inactive="custom/images/tabbIcons/inactive/more.png" data-page="more-page" id="tabbar-more" href="#" >More</a></li>
+	        	</ul>
+	        </div>
+		</div>
+    </div>
+</body>
+</html>
