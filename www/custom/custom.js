@@ -2,6 +2,8 @@ var footerVisible = true;
 var headerVisible = true;
 var housesImgPath = "custom/images/houses/"
 
+var armiesVisible = false;
+
 var user={}
 
 function deviceReady() {

@@ -400,12 +400,23 @@ a {
 
 .groupNumMembers{
 	text-align: center;
+	color:lightgrey;
+	font-size:11px;
 }
 
 .groupDescription{
 	padding-top: 1%;
 	text-align: center;
 }
+
+
+
+
+
+
+
+
+
 
 /*  Edit User Page         -------------------------*/
 

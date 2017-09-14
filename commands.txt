@@ -1,0 +1,38 @@
+ALGUNOS COMANDOS:
+
+cd Desktop    ## cambia de directorio
+cd ..         ## va al directorio anterior
+ls            ## lista los archivos del directorio
+ls -la        ## lista los archivos del directorio, y los ocultos (los que empiezan con ., como .idea/)
+pwd           ## imprime la ruta al directorio donde se esta
+cat file      ## imprime el contenido de un archivo
+adb devices   ## lista los dispositivos android encontrados (conectados o virtuales)
+ifconfig      ## Lista las interfaces de red, por ahi esta la ip de la compu
+ping ip       ## Le hace ping a determinada ip, para saber si estan en la misma redc
+
+
+
+cordova:
+    - cordova build android|ios    ## Compila el proyecto y crea un ejecutable. Lo guarda en una carpeta que no esta en el proyecto
+    - cordova run android|ios     ## Compila e instala el proyecto en la plataforma deseada
+    - cordova platform add|rm android|ios  ## Agrega o remueve una plataforma del proyecto. (Crea la carpeta platforms/)
+    - cordova plugin add cordova-plugin-camera --save  ## Agrega un plugin al proyecto, lo guarda y lo agrega al config.xml
+    - cordova plugin search  ## Te busca plugins en la pagina oficial
+    - cordova plugin list    ## Te lista los plugins del proyecto
+
+cordova-icon    ## Crea los iconos para android e ios
+cordova-splash  ## Crea los splashs para android e ios
+
+
+
+npm: (es el node packege manager, se usa mas en el server)
+    - npm install   ## Se fija en el package.json y baja todos los plugins listados, los guarda en la carpeta node_modules.
+
+
+git:
+    - git status    ## Lista los archivos que se modificaron|agregaron|eliminaron
+    - git add file  ## Agrega los archivos al proximo commit (* para todo)
+    - git commit -am "Mensaje"  ## Crea un commit en git, con el mensaje deseado
+    - git pull origin master  ## Trae la branch origin remota
+    - git push origin master   ## Sube los commits a la branch remota
+
