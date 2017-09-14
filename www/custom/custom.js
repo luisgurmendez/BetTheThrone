@@ -71,7 +71,6 @@ function toggleFooter(){
 
 function installEvents() {
 
-
 	document.addEventListener("online", function() {
 		//somthing
 	}, false);
@@ -81,7 +80,6 @@ function installEvents() {
 		mui.history.back();
 		return false;
 	});
-
 
 	// Tabb selection
 	$('.mui-tabbar-button a').click(function(){
@@ -110,7 +108,6 @@ function installEvents() {
 
 	$('.facebookBtn').click(function(){
 
-
 		//facebookConnectPlugin.logout(function(data){alert(JSON.stringify(data))},function(data){alert(JSON.stringify(data))})
 		//facebookConnectPlugin.getLoginStatus(function(data){alert(data.status)},function(err){alert(JSON.stringify(err))})
 
@@ -119,11 +116,7 @@ function installEvents() {
         },function(err){
         	alert(JSON.stringify(err))
         })
-
-
 	})
-
-
 
 
 	$('.usernameHouseWrapperHeader').click(function(){
@@ -131,8 +124,6 @@ function installEvents() {
 		mui.viewport.showPage('selectHousePage','FLOAT_UP')
 
 	})
-
-
 
 	// TODO ANIMAR ENTRADA DE SAVE
 	$("#usernameInput").on("keyup",function(){
@@ -170,7 +161,10 @@ function installEvents() {
 
 	})
 
+	$('.charWrapper').click(function(){
+		mui.toast("clicked on " + $(this).data('character'),'center','long')
 
+	})
 
 }
 
