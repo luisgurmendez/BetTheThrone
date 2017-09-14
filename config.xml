@@ -10,6 +10,10 @@
     <gap:config-file parent="CFBundleShortVersionString" platform="ios">
         <string>1</string>
     </gap:config-file>
+
+    <platform name="android">
+        <preference name="android-minSdkVersion" value="15" />
+    </platform>
     <feature name="http://api.phonegap.com/1.0/device" />
     <feature name="http://api.phonegap.com/1.0/network" />
     <feature name="http://api.phonegap.com/1.0/notification" />
@@ -54,7 +58,7 @@
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-x-toast" spec="~2.6.0" />
     <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
-    <plugin name="cordova-plugin-facebook4" spec="~1.9.1">
+    <plugin name="cordova-plugin-facebook4" spec="~1.7.4">
         <variable name="APP_ID" value="1900208420244343" />
         <variable name="APP_NAME" value="BetTheThrone" />
     </plugin>

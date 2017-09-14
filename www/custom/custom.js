@@ -109,20 +109,22 @@ function installEvents() {
 	})
 
 	$('.facebookBtn').click(function(){
-		//mui.toast("Sign Up With Facebook!","center","short")
-		alert("caca")
-		alert(facebookConnectPlugin)
-		alert(window)
-		alert(navigator)
 
-        facebookConnectPlugin.login(["public_profile"],function(userData){
-			alert(JSON.stringify(userData))
-		} , function(error){
-            alert(JSON.stringify(error))
-        } )
+
+		//facebookConnectPlugin.logout(function(data){alert(JSON.stringify(data))},function(data){alert(JSON.stringify(data))})
+		//facebookConnectPlugin.getLoginStatus(function(data){alert(data.status)},function(err){alert(JSON.stringify(err))})
+
+        facebookConnectPlugin.login(["public_profile"],function(data){
+        	alert("login")
+        },function(err){
+        	alert(JSON.stringify(err))
+        })
 
 
 	})
+
+
+
 
 	$('.usernameHouseWrapperHeader').click(function(){
 		toggleFooter();
