@@ -44,10 +44,10 @@ function deviceReady() {
         $('.groupCJButton').width(Math.max.apply(Math, $('.groupCJButton').map(function(){ return $(this).width(); }).get()))
 
 
-		/*if(user.username == null){
+		if(user.username == null){
             toggleFooter();
             mui.viewport.showPage('signUpPage','FLOAT_UP')
-		}*/
+		}
 
 	} catch (e) {
 		//your decision
@@ -109,8 +109,17 @@ function installEvents() {
 	})
 
 	$('.facebookBtn').click(function(){
-		mui.toast("Sign Up With Facebook!","center","short")
-        openInAppBrowser("http://www.google.com")
+		//mui.toast("Sign Up With Facebook!","center","short")
+		alert("caca")
+		alert(facebookConnectPlugin)
+		alert(window)
+		alert(navigator)
+
+        facebookConnectPlugin.login(["public_profile"],function(userData){
+			alert(JSON.stringify(userData))
+		} , function(error){
+            alert(JSON.stringify(error))
+        } )
 
 
 	})

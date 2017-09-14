@@ -78,5 +78,16 @@
         },
         "is_top_level": false,
         "variables": {}
+    },
+    "cordova-plugin-facebook4": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-facebook4"
+        },
+        "is_top_level": true,
+        "variables": {
+            "APP_ID": "1900208420244343",
+            "APP_NAME": "BetTheThrone"
+        }
     }
 }
