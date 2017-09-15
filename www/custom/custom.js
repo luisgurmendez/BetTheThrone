@@ -21,7 +21,6 @@ function deviceReady() {
 
 
 		//Open DB
-
 		db = window.sqlitePlugin.openDatabase({name: 'betthethrone.db',location:'default'});
         createDBTables();
 
@@ -63,9 +62,7 @@ function deviceReady() {
                         user.username = res.rows.item(0).username
                         user.house = res.rows.item(0).house
 					}
-
 				}
-
                 if(user.username == null){
                     toggleFooter();
                     mui.viewport.showPage('signUpPage','FLOAT_UP')
@@ -104,6 +101,7 @@ function toggleFooter(){
 }
 
 
+// Creates if not exists the required tables, SQL Querys can be found on configuration.js
 function createDBTables(){
 	db.transaction(function(tx){
         tx.executeSql(configuration.sql.user)
@@ -116,6 +114,8 @@ function createDBTables(){
 	})
 }
 
+
+// Updates Header, adding house logo and adjusting the widths.
 function updateHeaderLabel(){
 
     // update header img.
@@ -128,6 +128,8 @@ function updateHeaderLabel(){
     $('.usernameHouseWrapperHeader').width(($('.usernameHeader span').width() + $('.houseIconHeader img').width() + 10) + 'px')
 
 }
+
+// Installs events, like click events, for the dom elements. (Every time HTML is injected dynamically those html tags have to re-install events.)
 function installEvents() {
 
 	document.addEventListener("online", function() {
@@ -142,18 +144,35 @@ function installEvents() {
 
 	// Tabb selection
 	$('.mui-tabbar-button a').click(function(){
+
 		if(!$(this).hasClass('active')){
-            var activeUrl = $(this).data('active')
-            var inactiveUrl = $($('.mui-tabbar-button a.active')[0]).data('inactive')
-            $('.mui-tabbar-button a.active').siblings('img').attr('src',inactiveUrl)
+
+			// gets image url of active new selected tabb
+            var activeBtnImgUrl = $(this).data('active')
+
+            // gets image url of inactive old selected tabb
+            var inactiveBtnImgUrl = $($('.mui-tabbar-button a.active')[0]).data('inactive')
+
+			// changes image to inactive
+            $('.mui-tabbar-button a.active').siblings('img').attr('src',inactiveBtnImgUrl)
+
             var previousSelectedTabbPos=$('.mui-tabbar-button a.active').offset().left
+
             $('.mui-tabbar-button a.active').removeClass('active')
-            $(this).siblings('img').attr('src',activeUrl);
+
+			// changes img to active
+            $(this).siblings('img').attr('src',activeBtnImgUrl);
             $(this).addClass('active')
+
+			// position of new selected tabb
             var newSelectedTabbPos = $(this).offset().left
-			console.log(newSelectedTabbPos)
+			// animates the move of slider
 			$("#tabbSelectedSlider").animate({left :newSelectedTabbPos})
+
+			// new page name
 			var goTo = $(this).data("page")
+
+			// Determines page transition depending on old and new pages positions.
 			if(newSelectedTabbPos > previousSelectedTabbPos){
             	var moveDirection = "SLIDE_LEFT"
 			}else{
@@ -165,6 +184,8 @@ function installEvents() {
 
 	})
 
+
+	// Login with facebook click event TODO: Fix
 	$('.facebookBtn').click(function(){
 
 		//facebookConnectPlugin.logout(function(data){alert(JSON.stringify(data))},function(data){alert(JSON.stringify(data))})
@@ -181,14 +202,15 @@ function installEvents() {
 	})
 
 
+	// Switch to select house page click event
 	$('.usernameHouseWrapperHeader').click(function(){
 		toggleFooter();
 		mui.viewport.showPage('selectHousePage','FLOAT_UP')
 
 	})
 
-	// TODO ANIMAR ENTRADA DE SAVE
-	$("#usernameInput").on("keyup",function(){
+	// Shows or hides Save button wheather there is text on usernameInput or not. TODO: ANIMAR ENTRADA DE SAVE
+	$("#usernameInput").on("keyup change",function(){
         if($(this).val() != ""){
             if(! $("#saveUsernameBtn").is(":visible")){
                 $("#saveUsernameBtn").show()
@@ -199,6 +221,7 @@ function installEvents() {
         }
 	})
 
+	// Saving user click event, saves user on Database as well ase switching to house selection page.
 	$("#saveUsernameBtn").click(function(){
         user.username=$("#usernameInput").val()
 
@@ -212,6 +235,7 @@ function installEvents() {
         mui.viewport.showPage("selectHousePage", "SLIDE_LEFT");
 	})
 
+	// Updates house in Database, as well as switching page
 	$('.houseWrapper').click(function(){
 		user.house = $(this).data('house');
 
@@ -223,13 +247,16 @@ function installEvents() {
         // Add footer.
 		toggleFooter();
 
+		// if the page before was the signup prompt
 		if(signedUp){
+			// takes signup page from history stack
 			mui.history.pop();
         }
 		mui.history.back()
 
 	})
 
+	// Catches char selection event
 	$('.charWrapper').click(function(){
 		mui.toast("clicked on " + $(this).data('character'),'center','long')
 
