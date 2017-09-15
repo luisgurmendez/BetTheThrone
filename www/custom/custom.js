@@ -57,10 +57,11 @@ function deviceReady() {
 
 		db.transaction(function(tx){
 			tx.executeSql("SELECT * FROM User WHERE userId = ?",[user.id],function (tx,res) {
-				if(res != null && res.rows != null){
-					if(res.rows.length > 0){
+                if(res != null && res.rows != null){
+                    if(res.rows.length > 0){
                         user.username = res.rows.item(0).username
                         user.house = res.rows.item(0).house
+						user.serverId=res.rows.item(0).serverId
 					}
 				}
                 if(user.username == null){
@@ -117,6 +118,7 @@ function createDBTables(){
 
 // Updates Header, adding house logo and adjusting the widths.
 function updateHeaderLabel(){
+
 
     // update header img.
     $('.houseIconHeader img').attr('src', housesImgPath + user.house + '.png')
@@ -223,26 +225,60 @@ function installEvents() {
 
 	// Saving user click event, saves user on Database as well ase switching to house selection page.
 	$("#saveUsernameBtn").click(function(){
-        user.username=$("#usernameInput").val()
+        user.username=$("#usernameInput").val();
 
-		db.transaction(function(tx){
-			tx.executeSql("INSERT INTO User (username) VALUES (?)",[user.username],function(tx,res){
-				//mui.alert(JSON.stringify(res))
-			},function(err){
-				mui.alert(JSON.stringify(err.message))
-			})
-		})
+
+        $.ajax({
+            url: "http://" + configuration.host + ":" +configuration.port + "/signup",
+            dataType:'json',
+            data: {username: user.username, uuid:window.device.uuid, platform: window.device.platform},
+            type:"POST",
+            success: function(data){
+                user.serverId=data.user['_id']
+                db.transaction(function(tx){
+                    tx.executeSql("INSERT INTO User (username, serverId) VALUES (?,?)",[data.user.username, data.user['_id'] ],function(tx,res){
+                        //mui.alert(JSON.stringify(res))
+                    },function(err){
+                        mui.alert(JSON.stringify(err.message))
+                    })
+                })
+            },
+            error: function(err){
+                alert(JSON.stringify(err))
+            }
+        })
+
+
         mui.viewport.showPage("selectHousePage", "SLIDE_LEFT");
+
+
 	})
 
 	// Updates house in Database, as well as switching page
 	$('.houseWrapper').click(function(){
-		user.house = $(this).data('house');
+        user.house = $(this).data('house');
 
-		db.transaction(function(tx){
-			tx.executeSql("UPDATE User SET house = ? WHERE userId = ? ",[user.house,user.id])
-			updateHeaderLabel()
-		});
+        $.ajax({
+        	url: "http://" + configuration.host + ":" + configuration.port + "/user/update",
+            dataType:'json',
+            data: {house:user.house,userId:user.serverId},
+            type:"POST",
+			success: function(data){
+
+                db.transaction(function(tx){
+                    tx.executeSql("UPDATE User SET house = ? WHERE userId = ? ",[user.house,user.id],function(tx,res){
+                        //alert(JSON.stringify(res))
+                    },function(err){
+                        alert(JSON.stringify(err.message))
+                    })
+                    updateHeaderLabel()
+                });
+
+			},error: function(err){
+
+			}
+
+		})
 
         // Add footer.
 		toggleFooter();
@@ -251,6 +287,7 @@ function installEvents() {
 		if(signedUp){
 			// takes signup page from history stack
 			mui.history.pop();
+			signedUp=false;
         }
 		mui.history.back()
 
