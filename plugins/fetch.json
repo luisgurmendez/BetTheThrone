@@ -89,5 +89,13 @@
             "APP_ID": "1900208420244343",
             "APP_NAME": "BetTheThrone"
         }
+    },
+    "cordova-sqlite-storage": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-sqlite-storage"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

@@ -6,6 +6,8 @@ var armiesVisible = false;
 
 var user={}
 
+var db=null;
+
 function deviceReady() {
 	try {
 		//Typically fired when the device changes orientation.
@@ -15,7 +17,15 @@ function deviceReady() {
 			mui.viewport.iScrollRefresh();
 		});
 
-		installEvents();
+
+		//Open DB
+
+		db = window.sqlitePlugin.openDatabase({name: 'betthethrone.db',location:'default'});
+        createDBTables();
+
+
+
+        installEvents();
 		
 		//Hide splash.
 		//Ocultar el splash.
@@ -69,6 +79,19 @@ function toggleFooter(){
 }
 
 
+function createDBTables(){
+	db.transaction(function(tx){
+        tx.executeSql(configuration.sql.user)
+        tx.executeSql(configuration.sql.prediction)
+        tx.executeSql(configuration.sql.group)
+        tx.executeSql(configuration.sql.userGroup)
+
+    },function(err){
+		mui.alert(JSON.stringify(err.message))
+	})
+}
+
+
 function installEvents() {
 
 	document.addEventListener("online", function() {
@@ -111,11 +134,14 @@ function installEvents() {
 		//facebookConnectPlugin.logout(function(data){alert(JSON.stringify(data))},function(data){alert(JSON.stringify(data))})
 		//facebookConnectPlugin.getLoginStatus(function(data){alert(data.status)},function(err){alert(JSON.stringify(err))})
 
+		mui.toast(window.device.uuid,"center","long")
+		/*
         facebookConnectPlugin.login(["public_profile"],function(data){
         	alert("login")
         },function(err){
         	alert(JSON.stringify(err))
         })
+        */
 	})
 
 

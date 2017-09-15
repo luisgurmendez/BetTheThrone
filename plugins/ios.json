@@ -38,6 +38,9 @@
             "APP_ID": "1900208420244343",
             "APP_NAME": "BetTheThrone",
             "PACKAGE_NAME": "org.luis.betthethrone"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "org.luis.betthethrone"
         }
     },
     "dependent_plugins": {}
