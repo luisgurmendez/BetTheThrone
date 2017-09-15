@@ -5,6 +5,8 @@ var housesImgPath = "custom/images/houses/"
 var armiesVisible = false;
 
 var user={}
+user.id=1
+var signedUp = false;
 
 var db=null;
 
@@ -55,16 +57,32 @@ function deviceReady() {
 
 
 		db.transaction(function(tx){
-			tx.executeSql("SELECT * FROM User WHERE userId = 1",[],function (tx,res) {
-				mui.alert(JSON.stringify(res.rows.item(0).username))
+			tx.executeSql("SELECT * FROM User WHERE userId = ?",[user.id],function (tx,res) {
+				if(res != null && res.rows != null){
+					if(res.rows.length > 0){
+                        user.username = res.rows.item(0).username
+                        user.house = res.rows.item(0).house
+					}
+
+				}
+
+                if(user.username == null){
+                    toggleFooter();
+                    mui.viewport.showPage('signUpPage','FLOAT_UP')
+					signedUp=true;
+
+                }else if(user.house == null){
+                	toggleFooter();
+					mui.viewport.showPage('selectHousePage','FLOAT_UP')
+				}else{
+                	updateHeaderLabel();
+				}
+
             },function(err){
 				mui.alert(JSON.stringify(err.message))
 			})
 		})
-		if(user.username == null){
-            toggleFooter();
-            mui.viewport.showPage('signUpPage','FLOAT_UP')
-		}
+
 
 	} catch (e) {
 		//your decision
@@ -98,7 +116,18 @@ function createDBTables(){
 	})
 }
 
+function updateHeaderLabel(){
 
+    // update header img.
+    $('.houseIconHeader img').attr('src', housesImgPath + user.house + '.png')
+
+    // update header label
+    $('.usernameHeader').html("<span>" + user.username + " <br> of house <br> " + user.house + " </span>");
+
+    // update width
+    $('.usernameHouseWrapperHeader').width(($('.usernameHeader span').width() + $('.houseIconHeader img').width() + 10) + 'px')
+
+}
 function installEvents() {
 
 	document.addEventListener("online", function() {
@@ -174,28 +203,30 @@ function installEvents() {
         user.username=$("#usernameInput").val()
 
 		db.transaction(function(tx){
-			tx.executeSql("INSERT INTO User (username) VALUES (?)",[user.username],function(tx,res){mui.alert(JSON.stringify(res))},function(err){mui.alert(JSON.stringify(err.message))})
+			tx.executeSql("INSERT INTO User (username) VALUES (?)",[user.username],function(tx,res){
+				//mui.alert(JSON.stringify(res))
+			},function(err){
+				mui.alert(JSON.stringify(err.message))
+			})
 		})
-
         mui.viewport.showPage("selectHousePage", "SLIDE_LEFT");
 	})
 
 	$('.houseWrapper').click(function(){
 		user.house = $(this).data('house');
-		// update header img.
-		$('.houseIconHeader img').attr('src', housesImgPath + user.house + '.png')
 
-		// update header label
-		$('.usernameHeader').html("<span>" + user.username + " <br> of house <br> " + user.house + " </span>");
-
-		// update width
-        $('.usernameHouseWrapperHeader').width(($('.usernameHeader span').width() + $('.houseIconHeader img').width() + 10) + 'px')
-
+		db.transaction(function(tx){
+			tx.executeSql("UPDATE User SET house = ? WHERE userId = ? ",[user.house,user.id])
+			updateHeaderLabel()
+		});
 
         // Add footer.
 		toggleFooter();
 
-		mui.viewport.showPage('home-page','FLOAT_DOWN')
+		if(signedUp){
+			mui.history.pop();
+        }
+		mui.history.back()
 
 	})
 
