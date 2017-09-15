@@ -54,6 +54,13 @@ function deviceReady() {
         $('.groupCJButton').width(Math.max.apply(Math, $('.groupCJButton').map(function(){ return $(this).width(); }).get()))
 
 
+		db.transaction(function(tx){
+			tx.executeSql("SELECT * FROM User WHERE userId = 1",[],function (tx,res) {
+				mui.alert(JSON.stringify(res.rows.item(0).username))
+            },function(err){
+				mui.alert(JSON.stringify(err.message))
+			})
+		})
 		if(user.username == null){
             toggleFooter();
             mui.viewport.showPage('signUpPage','FLOAT_UP')
@@ -165,6 +172,11 @@ function installEvents() {
 
 	$("#saveUsernameBtn").click(function(){
         user.username=$("#usernameInput").val()
+
+		db.transaction(function(tx){
+			tx.executeSql("INSERT INTO User (username) VALUES (?)",[user.username],function(tx,res){mui.alert(JSON.stringify(res))},function(err){mui.alert(JSON.stringify(err.message))})
+		})
+
         mui.viewport.showPage("selectHousePage", "SLIDE_LEFT");
 	})
 
