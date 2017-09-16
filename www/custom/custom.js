@@ -227,7 +227,6 @@ function installEvents() {
 	$("#saveUsernameBtn").click(function(){
         user.username=$("#usernameInput").val();
 
-
         $.ajax({
             url: "http://" + configuration.host + ":" +configuration.port + "/signup",
             dataType:'json',
@@ -291,6 +290,10 @@ function installEvents() {
         }
 		mui.history.back()
 
+	})
+
+	$("#groupCreateButton").click(function(){
+		mui.viewport.showPage("createGroupPage","FLOAT_UP")
 	})
 
 	// Catches char selection event
