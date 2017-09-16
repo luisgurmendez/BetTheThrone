@@ -481,7 +481,7 @@ a {
 	width:100%;
 }
 
-#saveUsernameBtn{
+#saveUsernameBtn, #saveGroupNameBtn{
 	position:absolute;
 	bottom:0px;
 	width:100%;
@@ -495,7 +495,8 @@ a {
 	vertical-align: middle;
 }
 
-#saveUsernameBtn:after{
+
+#saveUsernameBtn:after, #saveGroupNameBtn:after{
 	font-family: FontAwesome;
 	content: "\f105";
 	display: inline-block;
@@ -518,6 +519,21 @@ a {
 
 
 /*    Create grouo page -------------------------------*/
+
+
+#createGroupSubTitle:after, #selectHouseSubTitle:after{
+	font-family: FontAwesome;
+	content: "\f104";
+	display: inline-block;
+	padding-right: 3px;
+	float:left;
+	margin-left:10px;
+	font-weight: 100;
+	font-size:30px;
+	vertical-align: middle;
+
+}
+
 
 #groupNameInput{
 	width: 70%;

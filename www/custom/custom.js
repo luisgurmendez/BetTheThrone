@@ -223,6 +223,18 @@ function installEvents() {
         }
 	})
 
+
+	$("#groupNameInput").on("keyup change", function(){
+        if($(this).val() != ""){
+            if(! $("#saveGroupNameBtn").is(":visible")){
+                $("#saveGroupNameBtn").show()
+            }
+        }else{
+            $("#saveGroupNameBtn").hide()
+
+        }
+	});
+
 	// Saving user click event, saves user on Database as well ase switching to house selection page.
 	$("#saveUsernameBtn").click(function(){
         user.username=$("#usernameInput").val();
@@ -292,8 +304,54 @@ function installEvents() {
 
 	})
 
+
+	$("#saveGroupNameBtn").click(function(){
+
+		var groupName = $('#groupNameInput').val();
+        var groupDescription = $('#groupDescriptionInput').val();
+
+        $.ajax({
+            url: "http://" + configuration.host + ":" +configuration.port + "/group/create",
+            dataType:'json',
+            data: {name: groupName , description:groupDescription},
+            type:"POST",
+            success: function(data){
+            	var groupCode = data.group.code
+                db.transaction(function(tx){
+                    tx.executeSql("INSERT INTO [Group] (name, description, code) VALUES (?,?,?)",[groupName, groupDescription,groupCode],function(tx,res){
+                        //mui.alert(JSON.stringify(res))
+						toggleFooter();
+						mui.history.back();
+
+
+                    },function(err){
+                    	mui.alert("Error")
+                        mui.alert(JSON.stringify(err))
+                    })
+                })
+            },
+            error: function(err){
+                alert(JSON.stringify(err))
+            }
+        })
+
+
+
+	})
+
 	$("#groupCreateButton").click(function(){
+		toggleFooter();
 		mui.viewport.showPage("createGroupPage","FLOAT_UP")
+	})
+
+	$("#createGroupSubTitle").click(function(){
+		mui.history.back();
+		toggleFooter();
+	})
+
+	$("#selectHouseSubTitle").click(function(){
+		mui.history.back();
+		toggleFooter();
 	})
 
 	// Catches char selection event
