@@ -280,7 +280,7 @@ a {
 }
 
 /*  Prediciton Page                          */
-#predictionSubTitle,#selectHouseSubTitle, #createGroupSubTitle{
+#predictionSubTitle,#selectHouseSubTitle, #createGroupSubTitle, #joinGroupSubTitle{
 
 	width:100%;
 	height:60px;
@@ -481,7 +481,7 @@ a {
 	width:100%;
 }
 
-#saveUsernameBtn, #saveGroupNameBtn{
+#saveUsernameBtn, #saveGroupBtn, #joinGroupBtn{
 	position:absolute;
 	bottom:0px;
 	width:100%;
@@ -496,7 +496,7 @@ a {
 }
 
 
-#saveUsernameBtn:after, #saveGroupNameBtn:after{
+#saveUsernameBtn:after, #saveGroupBtn:after, #joinGroupBtn:after{
 	font-family: FontAwesome;
 	content: "\f105";
 	display: inline-block;
@@ -511,7 +511,7 @@ a {
 
 /*  Select house page  ------------------------ */
 
-#selectHouseBody, #createGroupBody{
+#selectHouseBody, #createGroupBody, #joinGroupBody{
 	 top: 0px !important;
 }
 
@@ -521,7 +521,7 @@ a {
 /*    Create grouo page -------------------------------*/
 
 
-#createGroupSubTitle:after, #selectHouseSubTitle:after{
+#createGroupSubTitle:after, #selectHouseSubTitle:after, #joinGroupSubTitle:after{
 	font-family: FontAwesome;
 	content: "\f104";
 	display: inline-block;
@@ -535,7 +535,7 @@ a {
 }
 
 
-#groupNameInput{
+#groupNameInput, #groupCodeInput{
 	width: 70%;
 	margin-left:15%;
 	font-size: 15px;

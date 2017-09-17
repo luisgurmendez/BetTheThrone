@@ -224,13 +224,27 @@ function installEvents() {
 	})
 
 
-	$("#groupNameInput").on("keyup change", function(){
+	$("#groupCodeInput").on("keyup change", function(){
+
         if($(this).val() != ""){
-            if(! $("#saveGroupNameBtn").is(":visible")){
-                $("#saveGroupNameBtn").show()
+
+            if(! $("#joinGroupBtn").is(":visible")){
+
+                $("#joinGroupBtn").show()
             }
         }else{
-            $("#saveGroupNameBtn").hide()
+            $("#joinGroupBtn").hide()
+
+        }
+	})
+
+	$("#groupNameInput").on("keyup change", function(){
+        if($(this).val() != ""){
+            if(! $("#saveGroupBtn").is(":visible")){
+                $("#saveGroupBtn").show()
+            }
+        }else{
+            $("#saveGroupBtn").hide()
 
         }
 	});
@@ -305,8 +319,7 @@ function installEvents() {
 	})
 
 
-	$("#saveGroupNameBtn").click(function(){
-
+	$("#saveGroupBtn").click(function(){
 		var groupName = $('#groupNameInput').val();
         var groupDescription = $('#groupDescriptionInput').val();
 
@@ -334,10 +347,23 @@ function installEvents() {
                 alert(JSON.stringify(err))
             }
         })
-
-
-
 	})
+
+
+
+
+
+
+	$('#groupJoinButton').click(function(){
+		toggleFooter();
+		mui.viewport.showPage("joinGroupPage","FLOAT_UP")
+	})
+
+
+    $("#joinGroupSubTitle").click(function(){
+        mui.history.back();
+        toggleFooter();
+    })
 
 	$("#groupCreateButton").click(function(){
 		toggleFooter();
