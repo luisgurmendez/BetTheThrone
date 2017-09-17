@@ -8,6 +8,9 @@ var user={}
 user.id=1
 var signedUp = false;
 
+var groupSearchAjax;
+var validCode=false;
+
 var db=null;
 
 function deviceReady() {
@@ -232,6 +235,32 @@ function installEvents() {
 
                 $("#joinGroupBtn").show()
             }
+
+            if(groupSearchAjax != null){
+            	groupSearchAjax.abort()
+			}
+
+            groupSearchAjax = $.ajax({
+            	url:"http://" + configuration.host + ":" + configuration.port + "/group/search ",
+				dataType:"json",
+				type:"POST",
+				data:{code:$(this).val()},
+				success: function(data){
+                    if(data.group != null){
+                    	validCode=true
+						$("#groupCodeInput").css({"border":"2px solid #5bb25c"})
+					}else{
+                        validCode=false
+                        $("#groupCodeInput").css({"border":"2px solid #B23734"})
+                    }
+				},
+				error: function(err){
+                    alert(JSON.stringify(err))
+
+                }
+			})
+
+
         }else{
             $("#joinGroupBtn").hide()
 
@@ -248,6 +277,17 @@ function installEvents() {
 
         }
 	});
+
+	$('#joinGroupBtn').click(function(){
+		if(validCode){
+			toggleFooter();
+			mui.history.back();
+
+			// TODO: Save on local database.
+		}else{
+			mui.toast("Not a valid code","center","long")
+		}
+	})
 
 	// Saving user click event, saves user on Database as well ase switching to house selection page.
 	$("#saveUsernameBtn").click(function(){
@@ -300,6 +340,7 @@ function installEvents() {
                 });
 
 			},error: function(err){
+                alert(JSON.stringify(err))
 
 			}
 
