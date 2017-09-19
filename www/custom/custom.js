@@ -11,6 +11,8 @@ var signedUp = false;
 var groupSearchAjax;
 var validCode=false;
 
+var searchedGroup;
+
 var db=null;
 
 function deviceReady() {
@@ -246,6 +248,7 @@ function installEvents() {
 				type:"POST",
 				data:{code:$(this).val()},
 				success: function(data){
+            	    searchedGroup = data.group;
                     if(data.group != null){
                     	validCode=true
 						$("#groupCodeInput").css({"border":"2px solid #5bb25c"})
@@ -283,7 +286,34 @@ function installEvents() {
 			toggleFooter();
 			mui.history.back();
 
-			// TODO: Save on local database.
+            $.ajax({
+                url:"http://" + configuration.host + ":" + configuration.port + "/group/join ",
+                dataType:"json",
+                type:"POST",
+                data:{groupId: searchedGroup['_id'],userId:user.serverId},
+                success: function(data){
+                    alert(JSON.stringify(data))
+
+                    if(data.joined){
+                        db.transaction(function(tx){
+                                tx.executeSql("INSERT INTO UserGroup (groupId,userId) VALUES (?,?)",[searchedGroup['_id'],user.id],function(tx,res){
+                                //alert(JSON.stringify(res))
+                                    
+                            },function(err){
+                                alert(JSON.stringify(err))
+                            })
+                        });
+                    }
+
+                },
+                error: function(err){
+                    alert(JSON.stringify(err));
+
+                }
+
+            })
+
+
 		}else{
 			mui.toast("Not a valid code","center","long")
 		}
