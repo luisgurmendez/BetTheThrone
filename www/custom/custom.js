@@ -296,12 +296,23 @@ function installEvents() {
 
                     if(data.joined){
                         db.transaction(function(tx){
-                                tx.executeSql("INSERT INTO UserGroup (groupId,userId) VALUES (?,?)",[searchedGroup['_id'],user.id],function(tx,res){
+                            // TODO: Checkear que ya no este. Da error, clave primaria ya existe
+                            tx.executeSql("INSERT INTO UserGroup (groupId,userId) VALUES (?,?)",[searchedGroup['_id'],user.id],function(tx,res){
                                 //alert(JSON.stringify(res))
-                                    
+                                // Inserts users of the group
+                                for(i in searchedGroup.users){
+                                    tx.executeSql("INSERT INTO User (serverId,username,house) VALUES (?,?,?)",searchedGroup.users[i]['_id'],searchedGroup.users[i].username,searchedGroup.users[i].house,function(){},function(){})
+                                }
+                                
                             },function(err){
                                 alert(JSON.stringify(err))
                             })
+
+                            alert(JSON.stringify(searchedGroup))
+
+                            //tx.executeSql()
+
+
                         });
                     }
 
