@@ -8,7 +8,7 @@ var user={}
 user.id=1
 var signedUp = false;
 
-var groupSearchAjax;
+var groupSearchAjaxCall;
 var validCode=false;
 
 var searchedGroup;
@@ -66,7 +66,7 @@ function deviceReady() {
                     if(res.rows.length > 0){
                         user.username = res.rows.item(0).username
                         user.house = res.rows.item(0).house
-						user.serverId=res.rows.item(0).serverId
+						user.userIdInServer=res.rows.item(0).userIdInServer
 					}
 				}
                 if(user.username == null){
@@ -238,18 +238,18 @@ function installEvents() {
                 $("#joinGroupBtn").show()
             }
 
-            if(groupSearchAjax != null){
-            	groupSearchAjax.abort()
+            if(groupSearchAjaxCall != null){
+            	groupSearchAjaxCall.abort()
 			}
 
-            groupSearchAjax = $.ajax({
+            groupSearchAjaxCall = $.ajax({
             	url:"http://" + configuration.host + ":" + configuration.port + "/group/search ",
 				dataType:"json",
 				type:"POST",
 				data:{code:$(this).val()},
 				success: function(data){
-            	    searchedGroup = data.group;
-                    if(data.group != null){
+
+                    if(data.valid){
                     	validCode=true
 						$("#groupCodeInput").css({"border":"2px solid #5bb25c"})
 					}else{
@@ -290,35 +290,28 @@ function installEvents() {
                 url:"http://" + configuration.host + ":" + configuration.port + "/group/join ",
                 dataType:"json",
                 type:"POST",
-                data:{groupId: searchedGroup['_id'],userId:user.serverId},
+                data:{code: $("#groupCodeInput").val() ,userId:user.userIdInServer},
                 success: function(data){
                     alert(JSON.stringify(data))
 
+                    var joinedGroup = data.group
                     if(data.joined){
+
                         db.transaction(function(tx){
-                            // TODO: Checkear que ya no este. Da error, clave primaria ya existe
-                            tx.executeSql("INSERT INTO UserGroup (groupId,userId) VALUES (?,?)",[searchedGroup['_id'],user.id],function(tx,res){
-                                //alert(JSON.stringify(res))
-                                // Inserts users of the group
-                                for(i in searchedGroup.users){
-                                    tx.executeSql("INSERT INTO User (serverId,username,house) VALUES (?,?,?)",searchedGroup.users[i]['_id'],searchedGroup.users[i].username,searchedGroup.users[i].house,function(){},function(){})
-                                }
-                                
-                            },function(err){
-                                alert(JSON.stringify(err))
-                            })
-
-                            alert(JSON.stringify(searchedGroup))
-
-                            //tx.executeSql()
-
-
+                            // TODO: Checkear que no exista una entidad con misma clave. SELECT? INSERT or REPLACE?
+                            tx.executeSql("INSERT INTO [Group] (groupIdInServer,name,description,code) VALUES (?,?,?,?)",[joinedGroup['_id'],joinedGroup.name,joinedGroup.description,joinedGroup.code],success,error);
+                            for(i in joinedGroup.users){
+                                tx.executeSql("INSERT INTO User (userIdInServer,username,house) VALUES (?,?,?)",[joinedGroup.users[i]['_id'],joinedGroup.users[i].username,joinedGroup.users[i].house],success,error)
+                                tx.executeSql("INSERT INTO UserGroup (groupId,userId) VALUES (?,?)", [joinedGroup['_id'],joinedGroup.users[i]['_id']],success,error)
+                            }
+                        },function(error){
+                            alert("Error")
                         });
                     }
 
                 },
                 error: function(err){
-                    alert(JSON.stringify(err));
+                    alert(JSON.stringify("Error"));
 
                 }
 
@@ -340,9 +333,9 @@ function installEvents() {
             data: {username: user.username, uuid:window.device.uuid, platform: window.device.platform},
             type:"POST",
             success: function(data){
-                user.serverId=data.user['_id']
+                user.userIdInServer=data.user['_id']
                 db.transaction(function(tx){
-                    tx.executeSql("INSERT INTO User (username, serverId) VALUES (?,?)",[data.user.username, data.user['_id'] ],function(tx,res){
+                    tx.executeSql("INSERT INTO User (username, userIdInServer) VALUES (?,?)",[data.user.username, data.user['_id'] ],function(tx,res){
                         //mui.alert(JSON.stringify(res))
                     },function(err){
                         mui.alert(JSON.stringify(err.message))
@@ -367,7 +360,7 @@ function installEvents() {
         $.ajax({
         	url: "http://" + configuration.host + ":" + configuration.port + "/user/update",
             dataType:'json',
-            data: {house:user.house,userId:user.serverId},
+            data: {house:user.house,userId:user.userIdInServer},
             type:"POST",
 			success: function(data){
 
@@ -412,12 +405,12 @@ function installEvents() {
             type:"POST",
             success: function(data){
             	var groupCode = data.group.code
+                var groupId = data.group['_id']
                 db.transaction(function(tx){
-                    tx.executeSql("INSERT INTO [Group] (name, description, code) VALUES (?,?,?)",[groupName, groupDescription,groupCode],function(tx,res){
+                    tx.executeSql("INSERT INTO [Group] (name, description, code, groupIdInServer) VALUES (?,?,?,?)",[groupName, groupDescription,groupCode,groupId],function(tx,res){
                         //mui.alert(JSON.stringify(res))
 						toggleFooter();
 						mui.history.back();
-
 
                     },function(err){
                     	mui.alert("Error")
@@ -479,3 +472,11 @@ function openInAppBrowser(url) {
 	window.open(encodeURI(url), "_blank", "location=yes,closebuttoncaption=Volver,presentationstyle=pagesheet,transitionstyle='fliphorizontal',EnableViewPortScale=yes");
 }
 
+
+function success(tx, result) {
+    alert("succeeded " + JSON.stringify(result));
+}
+function error(tx, err) {
+    alert("ERROR  " + err.message);
+    return true;//THIS IS IMPORTANT FOR TRANSACTION TO ROLLBACK ON QUERY ERROR
+}
