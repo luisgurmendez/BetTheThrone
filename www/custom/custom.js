@@ -32,6 +32,14 @@ function deviceReady() {
 
 
         installEvents();
+        installEventsHomePage();
+        installEventsJoinPage();
+        installEventsPredictionPage();
+        installEventsSignupPage();
+        installEventsCreateGroupPage();
+        installEventsMorePage();
+        installEventsSelectHousePage();
+        installEventsGroupPage();
 		
 		//Hide splash.
 		//Ocultar el splash.
@@ -192,21 +200,6 @@ function installEvents() {
 	})
 
 
-	// Login with facebook click event TODO: Fix
-	$('.facebookBtn').click(function(){
-
-		//facebookConnectPlugin.logout(function(data){alert(JSON.stringify(data))},function(data){alert(JSON.stringify(data))})
-		//facebookConnectPlugin.getLoginStatus(function(data){alert(data.status)},function(err){alert(JSON.stringify(err))})
-
-		mui.toast(window.device.uuid,"center","long")
-		/*
-        facebookConnectPlugin.login(["public_profile"],function(data){
-        	alert("login")
-        },function(err){
-        	alert(JSON.stringify(err))
-        })
-        */
-	})
 
 
 	// Switch to select house page click event
@@ -216,250 +209,11 @@ function installEvents() {
 
 	})
 
-	// Shows or hides Save button wheather there is text on usernameInput or not. TODO: ANIMAR ENTRADA DE SAVE
-	$("#usernameInput").on("keyup change",function(){
-        if($(this).val() != ""){
-            if(! $("#saveUsernameBtn").is(":visible")){
-                $("#saveUsernameBtn").show()
-            }
-        }else{
-			$("#saveUsernameBtn").hide()
-
-        }
-	})
-
-
-	$("#groupCodeInput").on("keyup change", function(){
-
-        if($(this).val() != ""){
-
-            if(! $("#joinGroupBtn").is(":visible")){
-
-                $("#joinGroupBtn").show()
-            }
-
-            if(groupSearchAjaxCall != null){
-            	groupSearchAjaxCall.abort()
-			}
-
-            groupSearchAjaxCall = $.ajax({
-            	url:"http://" + configuration.host + ":" + configuration.port + "/group/search ",
-				dataType:"json",
-				type:"POST",
-				data:{code:$(this).val()},
-				success: function(data){
-
-                    if(data.valid){
-                    	validCode=true
-						$("#groupCodeInput").css({"border":"2px solid #5bb25c"})
-					}else{
-                        validCode=false
-                        $("#groupCodeInput").css({"border":"2px solid #B23734"})
-                    }
-				},
-				error: function(err){
-                    alert(JSON.stringify(err))
-
-                }
-			})
-
-
-        }else{
-            $("#joinGroupBtn").hide()
-
-        }
-	})
-
-	$("#groupNameInput").on("keyup change", function(){
-        if($(this).val() != ""){
-            if(! $("#saveGroupBtn").is(":visible")){
-                $("#saveGroupBtn").show()
-            }
-        }else{
-            $("#saveGroupBtn").hide()
-
-        }
-	});
-
-	$('#joinGroupBtn').click(function(){
-		if(validCode){
-			toggleFooter();
-			mui.history.back();
-
-            $.ajax({
-                url:"http://" + configuration.host + ":" + configuration.port + "/group/join ",
-                dataType:"json",
-                type:"POST",
-                data:{code: $("#groupCodeInput").val() ,userId:user.userIdInServer},
-                success: function(data){
-                    alert(JSON.stringify(data))
-
-                    var joinedGroup = data.group
-                    if(data.joined){
-
-                        db.transaction(function(tx){
-                            // TODO: Checkear que no exista una entidad con misma clave. SELECT? INSERT or REPLACE?
-                            tx.executeSql("INSERT INTO [Group] (groupIdInServer,name,description,code) VALUES (?,?,?,?)",[joinedGroup['_id'],joinedGroup.name,joinedGroup.description,joinedGroup.code],success,error);
-                            for(i in joinedGroup.users){
-                                tx.executeSql("INSERT INTO User (userIdInServer,username,house) VALUES (?,?,?)",[joinedGroup.users[i]['_id'],joinedGroup.users[i].username,joinedGroup.users[i].house],success,error)
-                                tx.executeSql("INSERT INTO UserGroup (groupId,userId) VALUES (?,?)", [joinedGroup['_id'],joinedGroup.users[i]['_id']],success,error)
-                            }
-                        },function(error){
-                            alert("Error")
-                        });
-                    }
-
-                },
-                error: function(err){
-                    alert(JSON.stringify("Error"));
-
-                }
-
-            })
-
-
-		}else{
-			mui.toast("Not a valid code","center","long")
-		}
-	})
-
-	// Saving user click event, saves user on Database as well ase switching to house selection page.
-	$("#saveUsernameBtn").click(function(){
-        user.username=$("#usernameInput").val();
-
-        $.ajax({
-            url: "http://" + configuration.host + ":" +configuration.port + "/signup",
-            dataType:'json',
-            data: {username: user.username, uuid:window.device.uuid, platform: window.device.platform},
-            type:"POST",
-            success: function(data){
-                user.userIdInServer=data.user['_id']
-                db.transaction(function(tx){
-                    tx.executeSql("INSERT INTO User (username, userIdInServer) VALUES (?,?)",[data.user.username, data.user['_id'] ],function(tx,res){
-                        //mui.alert(JSON.stringify(res))
-                    },function(err){
-                        mui.alert(JSON.stringify(err.message))
-                    })
-                })
-            },
-            error: function(err){
-                alert(JSON.stringify(err))
-            }
-        })
-
-
-        mui.viewport.showPage("selectHousePage", "SLIDE_LEFT");
-
-
-	})
-
-	// Updates house in Database, as well as switching page
-	$('.houseWrapper').click(function(){
-        user.house = $(this).data('house');
-
-        $.ajax({
-        	url: "http://" + configuration.host + ":" + configuration.port + "/user/update",
-            dataType:'json',
-            data: {house:user.house,userId:user.userIdInServer},
-            type:"POST",
-			success: function(data){
-
-                db.transaction(function(tx){
-                    tx.executeSql("UPDATE User SET house = ? WHERE userId = ? ",[user.house,user.id],function(tx,res){
-                        //alert(JSON.stringify(res))
-                    },function(err){
-                        alert(JSON.stringify(err.message))
-                    })
-                    updateHeaderLabel()
-                });
-
-			},error: function(err){
-                alert(JSON.stringify(err))
-
-			}
-
-		})
-
-        // Add footer.
-		toggleFooter();
-
-		// if the page before was the signup prompt
-		if(signedUp){
-			// takes signup page from history stack
-			mui.history.pop();
-			signedUp=false;
-        }
-		mui.history.back()
-
-	})
-
-
-	$("#saveGroupBtn").click(function(){
-		var groupName = $('#groupNameInput').val();
-        var groupDescription = $('#groupDescriptionInput').val();
-
-        $.ajax({
-            url: "http://" + configuration.host + ":" +configuration.port + "/group/create",
-            dataType:'json',
-            data: {name: groupName , description:groupDescription},
-            type:"POST",
-            success: function(data){
-            	var groupCode = data.group.code
-                var groupId = data.group['_id']
-                db.transaction(function(tx){
-                    tx.executeSql("INSERT INTO [Group] (name, description, code, groupIdInServer) VALUES (?,?,?,?)",[groupName, groupDescription,groupCode,groupId],function(tx,res){
-                        //mui.alert(JSON.stringify(res))
-						toggleFooter();
-						mui.history.back();
-
-                    },function(err){
-                    	mui.alert("Error")
-                        mui.alert(JSON.stringify(err))
-                    })
-                })
-            },
-            error: function(err){
-                alert(JSON.stringify(err))
-            }
-        })
-	})
 
 
 
 
 
-
-	$('#groupJoinButton').click(function(){
-		toggleFooter();
-		mui.viewport.showPage("joinGroupPage","FLOAT_UP")
-	})
-
-
-    $("#joinGroupSubTitle").click(function(){
-        mui.history.back();
-        toggleFooter();
-    })
-
-	$("#groupCreateButton").click(function(){
-		toggleFooter();
-		mui.viewport.showPage("createGroupPage","FLOAT_UP")
-	})
-
-	$("#createGroupSubTitle").click(function(){
-		mui.history.back();
-		toggleFooter();
-	})
-
-	$("#selectHouseSubTitle").click(function(){
-		mui.history.back();
-		toggleFooter();
-	})
-
-	// Catches char selection event
-	$('.charWrapper').click(function(){
-		mui.toast("clicked on " + $(this).data('character'),'center','long')
-
-	})
 
 }
 
