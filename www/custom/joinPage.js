@@ -88,23 +88,32 @@ function installEventsJoinPage(){
                     if(data.joined){
 
                         db.transaction(function(tx){
-                            // TODO: Checkear que no exista una entidad con misma clave. SELECT? INSERT or REPLACE?
-                            // TODO: Quedan casos bordes, VER bien!
-                            
-                            tx.executeSql("INSERT INTO [Group] (groupIdInServer,name,description,code) VALUES (?,?,?,?)",[joinedGroup['_id'],joinedGroup.name,joinedGroup.description,joinedGroup.code],function(tx,result){
-                                var groupId = result.insertId;
-                                for(i in joinedGroup.users){
-                                    // Se usa una funcion IIFE para que la variable, o objeto joinedGroup, no cambie. el for se ejecuta mas rapido que los callbacks de executeSql
-                                    (function(joinedGroupAsync,j){
-                                        tx.executeSql("INSERT OR IGNORE INTO User (userIdInServer,username,house) VALUES (?,?,?)",[joinedGroupAsync.users[j]['_id'],joinedGroupAsync.users[j].username,joinedGroupAsync.users[j].house],function(tx,result2){
-                                            tx.executeSql("SELECT userId,username FROM User WHERE userIdInServer = ? ",[joinedGroupAsync.users[j]['_id']],function(tx,result3){
-                                                var userId = result3.rows.item(0).userId
-                                                tx.executeSql("INSERT INTO UserGroup (groupId,userId,userIdInServer,groupIdInServer) VALUES (?,?,?,?)", [joinedGroupAsync['_id'],joinedGroupAsync.users[j]['_id'],userId,groupId],success,error)
 
+                            // TODO: Quedan casos bordes, VER bien!
+                            // INSERT OR IGNORE, to avoide unqiue ids issue. Basically IF already inserted ignore.
+                            tx.executeSql("INSERT OR IGNORE INTO [Group] (groupIdInServer,name,description,code) VALUES (?,?,?,?)",[joinedGroup['_id'],joinedGroup.name,joinedGroup.description,joinedGroup.code],function(tx,result){
+                                // INSERT and the SELECT to have the groupId from the local Database.
+
+                                // TODO: Si ya existe el grupo No hacer todo lo de abajo. Try catch?
+
+                                tx.executeSql("SELECT * FROM [Group] WHERE groupIdInServer = ?",[joinedGroup["_id"]],function(tx, result){
+                                    var groupId = result.rows.item(0).groupId;
+                                    for(i in joinedGroup.users){
+                                        // Use of IIFE functions to avoid joinedGroup Object change while waiting for the callback call. The for statements runs fsater than the async functions (executeSql).
+                                        (function(joinedGroupAsync,j){
+                                            // INSERT OR IGNORE, to avoide unqiue ids issue. Basically IF already inserted ignore.
+                                            tx.executeSql("INSERT OR IGNORE INTO User (userIdInServer,username,house) VALUES (?,?,?)",[joinedGroupAsync.users[j]['_id'],joinedGroupAsync.users[j].username,joinedGroupAsync.users[j].house],function(tx,result){
+                                                // INSERT and the SELECT to have the userId from the local Database.
+                                                tx.executeSql("SELECT userId,username FROM User WHERE userIdInServer = ? ",[joinedGroupAsync.users[j]['_id']],function(tx,result){
+                                                    var userId = result.rows.item(0).userId
+                                                    tx.executeSql("INSERT OR IGNORE INTO UserGroup (groupId,userId,userIdInServer,groupIdInServer) VALUES (?,?,?,?)", [groupId,userId,joinedGroupAsync.users[j]['_id'],joinedGroupAsync['_id']],success,error)
+                                                },error)
                                             },error)
-                                        },error)
-                                    })(joinedGroup,i)
-                                }
+                                        })(joinedGroup,i)
+                                    }
+
+                                },error)
+
                             },error);
 
                         },function(error){
