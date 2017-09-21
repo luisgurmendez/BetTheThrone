@@ -18,9 +18,7 @@ function installEventsSelectHousePage(){
                 db.transaction(function(tx){
                     tx.executeSql("UPDATE User SET house = ? WHERE userId = ? ",[user.house,user.id],function(tx,res){
                         //alert(JSON.stringify(res))
-                    },function(err){
-                        alert(JSON.stringify(err.message))
-                    })
+                    },txError)
                     updateHeaderLabel()
                 });
 

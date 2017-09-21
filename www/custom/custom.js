@@ -228,9 +228,9 @@ function openInAppBrowser(url) {
 
 
 function success(tx, result) {
-    alert("succeeded " + JSON.stringify(result));
+    //alert("succeeded " + JSON.stringify(result));
 }
-function error(tx, err) {
+function txError(tx, err) {
     alert("ERROR  " + err.message);
     return true;//THIS IS IMPORTANT FOR TRANSACTION TO ROLLBACK ON QUERY ERROR
 }
