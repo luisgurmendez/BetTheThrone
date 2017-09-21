@@ -89,25 +89,34 @@ function installEventsJoinPage(){
 
                         db.transaction(function(tx){
                             // TODO: Checkear que no exista una entidad con misma clave. SELECT? INSERT or REPLACE?
-                            tx.executeSql("INSERT INTO [Group] (groupIdInServer,name,description,code) VALUES (?,?,?,?)",[joinedGroup['_id'],joinedGroup.name,joinedGroup.description,joinedGroup.code],success,error);
-                            for(i in joinedGroup.users){
-                                tx.executeSql("INSERT INTO User (userIdInServer,username,house) VALUES (?,?,?)",[joinedGroup.users[i]['_id'],joinedGroup.users[i].username,joinedGroup.users[i].house],success,error)
-                                tx.executeSql("INSERT INTO UserGroup (groupId,userId) VALUES (?,?)", [joinedGroup['_id'],joinedGroup.users[i]['_id']],success,error)
-                            }
+                            // TODO: Quedan casos bordes, VER bien!
+                            
+                            tx.executeSql("INSERT INTO [Group] (groupIdInServer,name,description,code) VALUES (?,?,?,?)",[joinedGroup['_id'],joinedGroup.name,joinedGroup.description,joinedGroup.code],function(tx,result){
+                                var groupId = result.insertId;
+                                for(i in joinedGroup.users){
+                                    // Se usa una funcion IIFE para que la variable, o objeto joinedGroup, no cambie. el for se ejecuta mas rapido que los callbacks de executeSql
+                                    (function(joinedGroupAsync,j){
+                                        tx.executeSql("INSERT OR IGNORE INTO User (userIdInServer,username,house) VALUES (?,?,?)",[joinedGroupAsync.users[j]['_id'],joinedGroupAsync.users[j].username,joinedGroupAsync.users[j].house],function(tx,result2){
+                                            tx.executeSql("SELECT userId,username FROM User WHERE userIdInServer = ? ",[joinedGroupAsync.users[j]['_id']],function(tx,result3){
+                                                var userId = result3.rows.item(0).userId
+                                                tx.executeSql("INSERT INTO UserGroup (groupId,userId,userIdInServer,groupIdInServer) VALUES (?,?,?,?)", [joinedGroupAsync['_id'],joinedGroupAsync.users[j]['_id'],userId,groupId],success,error)
+
+                                            },error)
+                                        },error)
+                                    })(joinedGroup,i)
+                                }
+                            },error);
+
                         },function(error){
-                            alert("Error")
+                            alert("Error " + JSON.stringify(error))
                         });
                     }
 
                 },
                 error: function(err){
                     alert(JSON.stringify("Error"));
-
                 }
-
             })
-
-
         }else{
             mui.toast("Not a valid code","center","long")
         }
