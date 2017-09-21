@@ -12,21 +12,20 @@ function installEventsCreateGroupPage(){
         $.ajax({
             url: "http://" + configuration.host + ":" +configuration.port + "/group/create",
             dataType:'json',
-            data: {name: groupName , description:groupDescription},
+            data: {name: groupName , description:groupDescription, userId: user.userIdInServer},
             type:"POST",
             success: function(data){
                 var groupCode = data.group.code
-                var groupId = data.group['_id']
+                var groupIdInServer = data.group['_id']
                 db.transaction(function(tx){
-                    tx.executeSql("INSERT INTO [Group] (name, description, code, groupIdInServer) VALUES (?,?,?,?)",[groupName, groupDescription,groupCode,groupId],function(tx,res){
+                    tx.executeSql("INSERT INTO [Group] (name, description, code, groupIdInServer) VALUES (?,?,?,?)",[groupName, groupDescription,groupCode,groupIdInServer],function(tx,result){
                         //mui.alert(JSON.stringify(res))
-                        toggleFooter();
-                        mui.history.back();
+                        tx.executeSql("INSERT INTO UserGroup (groupId,userId,userIdInServer,groupIdInServer) VALUES (?,?,?,?)",[result.insertId,user.id,user.userIdInServer,groupIdInServer],function(tx,result){
+                            toggleFooter();
+                            mui.history.back();
+                        },txError)
 
-                    },function(err){
-                        mui.alert("Error")
-                        mui.alert(JSON.stringify(err))
-                    })
+                    },txError)
                 })
             },
             error: function(err){

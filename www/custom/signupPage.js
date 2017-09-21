@@ -52,9 +52,7 @@ function installEventsSignupPage(){
                 db.transaction(function(tx){
                     tx.executeSql("INSERT INTO User (username, userIdInServer) VALUES (?,?)",[data.user.username, data.user['_id'] ],function(tx,res){
                         //mui.alert(JSON.stringify(res))
-                    },function(err){
-                        mui.alert(JSON.stringify(err.message))
-                    })
+                    },txError)
                 })
             },
             error: function(err){

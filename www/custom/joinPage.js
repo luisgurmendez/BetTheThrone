@@ -3,14 +3,10 @@
  */
 function installEventsJoinPage(){
 
-
-
     $("#joinGroupSubTitle").click(function(){
         mui.history.back();
         toggleFooter();
     })
-
-
 
 
     // Ajax call to validate group code
@@ -48,16 +44,11 @@ function installEventsJoinPage(){
                 }
             })
 
-
         }else{
             $("#joinGroupBtn").hide()
 
         }
     })
-
-
-
-
 
     $("#groupNameInput").on("keyup change", function(){
         if($(this).val() != ""){
@@ -69,7 +60,6 @@ function installEventsJoinPage(){
 
         }
     });
-
 
     // Joins thorough gorup code. Inserts new group, new users and new UserGroups relations, including self user with new group.
     $('#joinGroupBtn').click(function(){
@@ -106,15 +96,15 @@ function installEventsJoinPage(){
                                                 // INSERT and the SELECT to have the userId from the local Database.
                                                 tx.executeSql("SELECT userId,username FROM User WHERE userIdInServer = ? ",[joinedGroupAsync.users[j]['_id']],function(tx,result){
                                                     var userId = result.rows.item(0).userId
-                                                    tx.executeSql("INSERT OR IGNORE INTO UserGroup (groupId,userId,userIdInServer,groupIdInServer) VALUES (?,?,?,?)", [groupId,userId,joinedGroupAsync.users[j]['_id'],joinedGroupAsync['_id']],success,error)
-                                                },error)
-                                            },error)
+                                                    tx.executeSql("INSERT OR IGNORE INTO UserGroup (groupId,userId,userIdInServer,groupIdInServer) VALUES (?,?,?,?)", [groupId,userId,joinedGroupAsync.users[j]['_id'],joinedGroupAsync['_id']],success,txError)
+                                                },txError)
+                                            },txError)
                                         })(joinedGroup,i)
                                     }
 
-                                },error)
+                                },txError)
 
-                            },error);
+                            },txError);
 
                         },function(error){
                             alert("Error " + JSON.stringify(error))
@@ -130,6 +120,5 @@ function installEventsJoinPage(){
             mui.toast("Not a valid code","center","long")
         }
     })
-
 
 }
