@@ -32,6 +32,7 @@ function deviceReady() {
 
 
         installEvents();
+
         installEventsHomePage();
         installEventsJoinPage();
         installEventsPredictionPage();
@@ -40,6 +41,7 @@ function deviceReady() {
         installEventsMorePage();
         installEventsSelectHousePage();
         installEventsGroupPage();
+
 		
 		//Hide splash.
 		//Ocultar el splash.
