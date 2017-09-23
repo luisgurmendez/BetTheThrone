@@ -298,6 +298,12 @@ a {
 	width:100%;
 }
 
+
+.charWrapperRow{
+	width:100%;
+	overflow: hidden;
+}
+
 .charWrapper, .houseWrapper{
 	width:30%;
 	margin-left:2.5%;
@@ -307,6 +313,17 @@ a {
 
 .charWrapper img, .houseWrapper img{
 	width:100%;
+	border-radius: 50%;
+}
+
+.charWrapper img.selected {
+	border: 2px solid #256dbf;
+}
+.charWrapper img.lives {
+	border: 2px solid rgb(0,146,69);
+}
+.charWrapper img.dies {
+	border: 2px solid rgb(193,39,45);
 }
 
 .charName, .houseName{
@@ -316,6 +333,56 @@ a {
 	font-family: GOT;
 	font-size: 11px;
 	margin-left:10%;
+}
+
+.arrowUp {
+	width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid #391616;
+}
+
+#predictionFateSelectWrapper{
+	width:95%;
+	margin: 2.5%;
+	background-color: #391616;
+	border-radius: 5px;
+	margin-top: 0;
+	padding-top:20px;
+	padding-bottom: 20px;
+
+}
+
+
+.predictionFateBtnsWrapper {
+
+	width: 50%;
+	margin-left: 25%;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.predictionFateBtn{
+	border-radius: 5px;
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:5px;
+	padding-bottom: 5px;
+	font-size:18px;
+	color:white;
+	text-align: center;
+	font-family: "Helvetica Neue", HelveticaNeue, "Helvetica-Neue",	Helvetica, "BBAlpha Sans", sans-serif;
+}
+
+.predictionFateBtn.lives{
+	background-color: rgb(0,146,69);
+	float: left;
+}
+
+.predictionFateBtn.dies{
+	background-color: rgb(193,39,45);
+	float: right;
 }
 
 
