@@ -32,7 +32,6 @@ function deviceReady() {
 
 
         installEvents();
-
         installEventsHomePage();
         installEventsJoinPage();
         installEventsPredictionPage();
