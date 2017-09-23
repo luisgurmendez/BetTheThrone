@@ -31,14 +31,33 @@ function installEventsPredictionPage(){
             $($('.charWrapper').find("img")).removeClass("selected")
             $($charSelected.find("img")).addClass("dies")
             killedBySelecting=false;
+            var char = $charSelected.data("character");
+            var killedBy = $(this).data("character");
+            var chapter=1;
+
+            $.ajax({
+                url: "http://" + configuration.host + ":" + configuration.port + "/prediction/create",
+                dataType:'json',
+                data: {character:char,status:"dies",killedBy:killedBy,userId:user.userIdInServer,chapter:chapter},
+                type:"POST",
+                success: function(data){
+
+                    if(data.predictionSaved){
+                        db.transaction(function(tx){
+                            tx.executeSql("INSERT INTO Prediction (character,status,killedBy,userId) VALUES (?,?,?,?,?)",[char,"dies",killedBy,user.id,chapter],txError,function(){
+                                mui.toast(char + " killedBy " + killedBy,"center","short")
+                            })
+                        })
+                    }
+                }
+            });
+
+
+
 
         }
 
-
     })
-
-
-
 
     function installEventBtns() {
         $('.predictionFateBtn.lives').click(function(){
