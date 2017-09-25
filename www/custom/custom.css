@@ -280,7 +280,7 @@ a {
 }
 
 /*  Prediciton Page                          */
-#predictionSubTitle,#selectHouseSubTitle, #createGroupSubTitle, #joinGroupSubTitle{
+#makePredictionSubTitle,#selectHouseSubTitle, #createGroupSubTitle, #joinGroupSubTitle{
 
 	width:100%;
 	height:60px;
@@ -294,7 +294,7 @@ a {
 
 }
 
-.predictionCharacterSelectWrapper, .houseSelectionWrapper{
+.makePredictionCharacterSelectWrapper, .houseSelectionWrapper{
 	width:100%;
 }
 
@@ -343,7 +343,7 @@ a {
 	border-bottom: 10px solid #391616;
 }
 
-#predictionFateSelectWrapper{
+#makePredictionFateSelectWrapper{
 	width:95%;
 	margin: 2.5%;
 	background-color: #391616;
@@ -355,7 +355,7 @@ a {
 }
 
 
-.predictionFateBtnsWrapper {
+.makePredictionFateBtnsWrapper {
 
 	width: 50%;
 	margin-left: 25%;
@@ -363,7 +363,7 @@ a {
 	display: inline-block;
 }
 
-.predictionFateBtn{
+.makePredictionFateBtn{
 	border-radius: 5px;
 	padding-left:10px;
 	padding-right:10px;
@@ -375,12 +375,12 @@ a {
 	font-family: "Helvetica Neue", HelveticaNeue, "Helvetica-Neue",	Helvetica, "BBAlpha Sans", sans-serif;
 }
 
-.predictionFateBtn.lives{
+.makePredictionFateBtn.lives{
 	background-color: rgb(0,146,69);
 	float: left;
 }
 
-.predictionFateBtn.dies{
+.makePredictionFateBtn.dies{
 	background-color: rgb(193,39,45);
 	float: right;
 }
@@ -548,7 +548,7 @@ a {
 	width:100%;
 }
 
-#saveUsernameBtn, #saveGroupBtn, #joinGroupBtn{
+#saveUsernameBtn, #saveGroupBtn, #joinGroupBtn, #makePredictionBtn{
 	position:absolute;
 	bottom:0px;
 	width:100%;
@@ -563,7 +563,7 @@ a {
 }
 
 
-#saveUsernameBtn:after, #saveGroupBtn:after, #joinGroupBtn:after{
+#saveUsernameBtn:after, #saveGroupBtn:after, #joinGroupBtn:after, #makePredictionBtn:after{
 	font-family: FontAwesome;
 	content: "\f105";
 	display: inline-block;
@@ -578,7 +578,7 @@ a {
 
 /*  Select house page  ------------------------ */
 
-#selectHouseBody, #createGroupBody, #joinGroupBody{
+#selectHouseBody, #createGroupBody, #joinGroupBody, #makePredictionBody{
 	 top: 0px !important;
 }
 
@@ -588,7 +588,7 @@ a {
 /*    Create grouo page -------------------------------*/
 
 
-#createGroupSubTitle:after, #selectHouseSubTitle:after, #joinGroupSubTitle:after{
+#createGroupSubTitle:after, #selectHouseSubTitle:after, #joinGroupSubTitle:after, #makePredictionSubTitle:after{
 	font-family: FontAwesome;
 	content: "\f104";
 	display: inline-block;
