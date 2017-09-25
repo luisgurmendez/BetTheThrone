@@ -40,6 +40,7 @@ function deviceReady() {
         installEventsMorePage();
         installEventsSelectHousePage();
         installEventsGroupPage();
+        installEventsMakePredictionPage();
 
 		
 		//Hide splash.

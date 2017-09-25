@@ -34,6 +34,7 @@
 	<script src="custom/homePage.js" type="text/javascript"></script>
 	<script src="custom/morePage.js" type="text/javascript"></script>
 	<script src="custom/predictionPage.js" type="text/javascript"></script>
+	<script src="custom/makePredictionPage.js" type="text/javascript"></script>
 	<script src="custom/selectHousePage.js" type="text/javascript"></script>
 	<script src="custom/signupPage.js" type="text/javascript"></script>
 	<script src="custom/joinPage.js" type="text/javascript"></script>
@@ -203,7 +204,9 @@
 
 				</div>
 
-				<div id='prediction-page' class="mui-page">
+
+				<div id="predictionPage" class="mui-page">
+
 					<div class="mui-page-header">
 						<div class="usernameHouseWrapperHeader">
 							<div class="usernameHeader">
@@ -214,10 +217,20 @@
 							</div>
 						</div>
 					</div>
-					<div class="mui-page-body mui-scrollable" id="prediction-body">
+
+					<div class="mui-page-body" id="predictionBody">
+
+
+						<div id="makePredictionBtn">Make a Prediction!</div>
+
+					</div>
+				</div>
+
+				<div id='makePredictionPage' class="mui-page">
+					<div class="mui-page-body mui-scrollable" id="makePredictionBody">
 						<div>
-							<div id="predictionSubTitle">Make your Move</div>
-							<div id="predictionCharacterSelectWrapper">
+							<div id="makePredictionSubTitle" class="back">Make your Move</div>
+							<div id="makePredictionCharacterSelectWrapper">
 
 								<div class="charWrapperRow">
 									<div class='charWrapper' data-character='archimaestreEbrose'>
@@ -630,7 +643,7 @@
 				<div id="tabbSelectedSlider"></div>
 	        	<ul class="mui-tabbar-list">
 	        		<li class="mui-tabbar-button" ><img src="custom/images/tabbIcons/active/home.png"><a data-active="custom/images/tabbIcons/active/home.png" data-inactive="custom/images/tabbIcons/inactive/home.png" data-page="home-page" class="active" id="tabbar-home" href="#">Home</a></li>
-	    			<li class="mui-tabbar-button"  ><img src="custom/images/tabbIcons/inactive/prediction.png"><a data-active="custom/images/tabbIcons/active/prediction.png" data-inactive="custom/images/tabbIcons/inactive/prediction.png" data-page="prediction-page" id="tabbar-predictions" href="#"  >Predictions</a></li>
+	    			<li class="mui-tabbar-button"  ><img src="custom/images/tabbIcons/inactive/prediction.png"><a data-active="custom/images/tabbIcons/active/prediction.png" data-inactive="custom/images/tabbIcons/inactive/prediction.png" data-page="predictionPage" id="tabbar-predictions" href="#"  >Predictions</a></li>
 	    			<li class="mui-tabbar-button"  ><img src="custom/images/tabbIcons/inactive/group.png"><a data-active="custom/images/tabbIcons/active/group.png" data-inactive="custom/images/tabbIcons/inactive/group.png" data-page="group-page" id="tabbar-groups" href='#'>Groups</a></li>
 	    			<li class="mui-tabbar-button"  ><img src="custom/images/tabbIcons/inactive/more.png"><a data-active="custom/images/tabbIcons/active/more.png" data-inactive="custom/images/tabbIcons/inactive/more.png" data-page="more-page" id="tabbar-more" href="#" >More</a></li>
 	        	</ul>
