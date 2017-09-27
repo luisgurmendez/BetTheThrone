@@ -8,10 +8,35 @@ var killedBySelecting = false;
 function installEventsMakePredictionPage(){
 
 
-    $('#makePredictionSubTitle.back').click(function(){
-        mui.history.back();
-        toggleFooter();
-    })
+    refreshEventBtns();
+    function refreshEventBtns(){
+
+
+        $('#makePredictionSubTitle.back').off("click")
+        $('#makePredictionSubTitle.cancel').off("click")
+
+        $('#makePredictionSubTitle.back').click(function(){
+            mui.history.back();
+            toggleFooter();
+        })
+
+        $('#makePredictionSubTitle.cancel').click(function(){
+            killedBySelecting=false;
+            $charSelected.find("img").removeClass("selected")
+            $charSelected=null;
+
+
+            // Changes subtitle label and icon
+            $(this).addClass("back")
+            $(this).removeClass("cancel")
+            refreshEventBtns();
+            $('#makePredictionSubTitle').text("Make your move")
+
+
+        })
+
+    }
+
 
 
 
@@ -43,6 +68,14 @@ function installEventsMakePredictionPage(){
             var char = $charSelected.data("character");
             var killedBy = $(this).data("character");
             var chapter=1;
+
+            // Changes subtitle label and icon
+            $("#makePredictionSubTitle").addClass("back")
+            $("#makePredictionSubTitle").removeClass("cancel")
+            $('#makePredictionSubTitle').text("Make your move")
+            refreshEventBtns();
+
+
 
             $.ajax({
                 url: "http://" + configuration.host + ":" + configuration.port + "/prediction/create",
@@ -81,6 +114,16 @@ function installEventsMakePredictionPage(){
             var iScroll = $("#makePredictionPage .mui-scrollable").data("iScroll")
             iScroll.refresh();
             killedBySelecting=true;
+
+            // Changes subtitle label and icon
+            $('#makePredictionSubTitle').removeClass("back")
+            $('#makePredictionSubTitle').addClass("cancel")
+            $('#makePredictionSubTitle').text("Killed By")
+            refreshEventBtns();
+
+
+
+
 
         })
     }
