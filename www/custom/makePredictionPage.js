@@ -4,11 +4,15 @@
 
 
 var $charSelected;
+
+// Determines the selecting state
 var killedBySelecting = false;
 function installEventsMakePredictionPage(){
 
 
     refreshEventBtns();
+
+    // To refresh cancel or back subtitleBtn, every time classes change, refresh events.
     function refreshEventBtns(){
 
 
@@ -44,7 +48,10 @@ function installEventsMakePredictionPage(){
     // Catches char selection event
     $('.charWrapper').click(function(){
         //mui.toast("clicked on " + $(this).data('character'),'center','long')
+
         if(!killedBySelecting){
+
+            // Adds lives or dies Select panel
             $charSelected = $(this)
             var row = $(this).parent();
             var charWrapperPos = $(this).offset().left
@@ -54,14 +61,20 @@ function installEventsMakePredictionPage(){
             var arrowBorder = $('.arrowUp').css("borderLeftWidth").match(/\d/g).join("");
             $('.arrowUp').css({'margin-left':charWrapperPos + charWrapperWidth/2 - arrowBorder/2})
 
+
+            // refreshes iscoll for the screen to fit all elements.
             var iScroll = $("#makePredictionPage .mui-scrollable").data("iScroll")
             if(iScroll != undefined){
                 iScroll.refresh();
+                // Scroll to lives or dies select panel  TODO: Not working?
                 iScroll.scrollToElement($('#makePredictionFateSelectWrapper')[0],2000,null,true)
             }
+
+            //re install lives or dies select panel btns, as they were created dyanmically.
             installEventBtns()
         }else{
 
+            // Color border of chars image
             $($('.charWrapper').find("img")).removeClass("selected")
             $($charSelected.find("img")).addClass("dies")
             killedBySelecting=false;
@@ -77,6 +90,7 @@ function installEventsMakePredictionPage(){
 
 
 
+            // Ajax request, for creating a prediction
             $.ajax({
                 url: "http://" + configuration.host + ":" + configuration.port + "/prediction/create",
                 dataType:'json',

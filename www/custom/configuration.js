@@ -4,7 +4,7 @@
 
 var configuration={};
 configuration.sql={};
-configuration.host="192.168.1.11"
+configuration.host="localhost"
 configuration.port="3000"
 configuration.sql.user="CREATE TABLE IF NOT EXISTS User (userId integer primary key autoincrement, username text, house text,userIdInServer text unique)";
 configuration.sql.prediction="CREATE TABLE IF NOT EXISTS Prediction (predictionId integer primary key autoincrement, character text, status text, killedBy text, chapter integer, userId integer, FOREIGN KEY (userId) REFERENCES User(userId))";

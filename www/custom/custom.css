@@ -660,6 +660,72 @@ a {
 
 
 
+/*       Prediction Page -------------------------- */
+
+.predictionEpisodeLabel{
+	width:100%;
+	text-align: center;
+	color: lightgrey;
+	font-size:12px;
+	font-style: italic;
+	margin-bottom: 3px;
+}
+
+.predictionWrapper{
+	width:90%;
+	margin-left:5%;
+	border-bottom: 1px solid black;
+	padding: 5px;
+	overflow:auto;
+}
+
+.predictionCharacterFirst, .predictionCharacterSecond{
+	width: 20%;
+}
+
+.predictionCharacterSecond{
+	float:right;
+}
+
+.predictionCharacterFirst{
+	float:left;
+}
+
+
+.predictionCharacterFirst img, .predictionCharacterSecond img{
+	width:100%;
+	border-radius: 50%;
+}
+
+.predictionStatusLabel{
+	color: lightgray;
+	width: 60%;
+	float:left;
+	text-align: center;
+	vertical-align: middle;
+}
+
+
+#predictionPageScroll{
+	width:100%;
+	overflow:auto;
+}
+
+.predictionWrapper.death{
+	background-color: rgba(218, 13, 13, 0.27)
+}
+
+.predictionWrapper.lives{
+
+	background-color: rgba(17, 197, 81, 0.27);
+}
+
+
+#makePredictionBtn{
+	bottom:1px;
+	z-index:3;
+}
+
 
 
 
